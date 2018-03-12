@@ -1,3 +1,8 @@
+Source code repository
+========================================
+https://github.com/akilageethal/conways-game-of-life
+
+
 Running the program
 ========================================
 
@@ -17,3 +22,7 @@ Running the program
     program may throw errors.***
 
 (4)Output will be printed on the console
+
+
+==================================================================
+

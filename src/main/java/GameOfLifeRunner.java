@@ -11,7 +11,7 @@ import java.util.Scanner;
  */
 public class GameOfLifeRunner {
 
-    // below values should be ideally fetched from configurations.
+    // below values should be [],ideally fetched from configurations.
     private static final int WIDTH = 200;
     private static final int HEIGHT = 200;
     private static final int ITERATIONS = 100;
