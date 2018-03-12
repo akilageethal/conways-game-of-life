@@ -1,15 +1,32 @@
-package main.java;
+package main.java.model;
 
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Represents a cell in the gird with the status
+ */
 public class Cell extends Observable implements Observer{
 
+    /**
+     * state of the cell. alive = true, dead = false
+     */
     private boolean alive;
+
+    /**
+     * x,y coordinate values of the cell
+     */
     private int x;
     private int y;
 
+    /**
+     * Current live neighbour count of the cell
+     */
     private int currentLiveNeighbourCount;
+
+    /**
+     * Next live neighbour count. Will be updated as the observing cells change the statuses
+     */
     private int nextLiveNeighbourCount;
 
     public Cell(int xCoordinate, int yCoordinate) {
@@ -17,6 +34,11 @@ public class Cell extends Observable implements Observer{
         this.y = yCoordinate;
     }
 
+    /**
+     * When notified from other cell state changes, update the next neighbour count
+     * @param o Cell which changed the state
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
         Cell cell = (Cell)o;
@@ -27,6 +49,10 @@ public class Cell extends Observable implements Observer{
         }
     }
 
+    /**
+     * Generate next state of the cell using the current alive neighbout count.
+     * Set the state only when changing from the current
+     */
     public void generateNextState() {
         if(this.isAlive()) {
             if(getCurrentLiveNeighbourCount() > 3 || getCurrentLiveNeighbourCount() < 2 ) {
@@ -39,16 +65,26 @@ public class Cell extends Observable implements Observer{
         }
     }
 
+    /**
+     * Set new cell state and notify the observers.
+     * @param alive new cell state
+     */
     public void setState(boolean alive) {
         this.setAlive(alive);
         this.setChanged();
         this.notifyObservers();
     }
 
+    /**
+     * Increment next live neighbour count. will be called when an observing dead cell turns alive
+     */
     private void incrementLiveNeighbours() {
         this.setNextLiveNeighbourCount(this.getNextLiveNeighbourCount() + 1);
     }
 
+    /**
+     * Decrement next live neighbour count. WIll be called when an observing live cell turns dead
+     */
     private void decrementLiveNeighbours() {
         int currentCount = this.getNextLiveNeighbourCount();
         if(currentCount > 0 ) {
