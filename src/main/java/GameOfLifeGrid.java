@@ -23,6 +23,9 @@ public class GameOfLifeGrid {
 
     private Cell[][] cellGird;
 
+    public GameOfLifeGrid() {
+    }
+
     public GameOfLifeGrid(String[] tempInputArr, int width, int height) {
         this.width = width;
         this.height = height;
@@ -35,7 +38,7 @@ public class GameOfLifeGrid {
      * Setup the initial grid for given width and height.
      * All cell will be in dead state initially
      */
-    private void setUpCells() {
+    public void setUpCells() {
         cellGird = new Cell[width][height];
 
         for(int xCoordinate = 0; xCoordinate < width; xCoordinate++) {
@@ -49,30 +52,40 @@ public class GameOfLifeGrid {
      * Set the initial alive cells according to the input.
      * @param tempInputArr string array with coordinates of the initial alive cells
      */
-    private void setInitialStates(String[] tempInputArr) {
+    public void setInitialStates(String[] tempInputArr) {
         tempInputArr[0] = tempInputArr[0].replace("[","");
         tempInputArr[tempInputArr.length -1 ] = tempInputArr[tempInputArr.length -1 ].replace("]","");
         for (String liveCoordinate : tempInputArr) {
-            String[] coordinates = liveCoordinate.split(",");
-            int x = Integer.parseInt(coordinates[0]);
-            int y = Integer.parseInt(coordinates[1]);
-            cellGird[x][y].setState(true);
+            if (liveCoordinate != null && !liveCoordinate.isEmpty() && liveCoordinate.contains(",")) {
+                String[] coordinates = liveCoordinate.split(",");
+                int x = Integer.parseInt(coordinates[0]);
+                int y = Integer.parseInt(coordinates[1]);
+                cellGird[x][y].setState(true);
+            }
         }
         generateOutPut(); // will call once to initially set the new neighbour count as the current neighbour count
     }
 
     /**
      * Generate next state. Will be called once for each iteration
-     * @param iteration iteration no to be printed in the out put
      */
-    public void generateNextState(int iteration) {
+    public List<String> generateNextState() {
 
         for(int xCoordinate = 0; xCoordinate < width; xCoordinate++) {
             for (int yCoordinate = 0; yCoordinate < height; yCoordinate++) {
                 cellGird[xCoordinate][yCoordinate].generateNextState();
             }
         }
-        List<String> output = generateOutPut();
+        return generateOutPut();
+   }
+
+    /**
+     * Print the output for single iteration
+     * @param iteration iteration number
+     * @param output single iteration output
+     */
+    private void printStdOutput(int iteration, List<String> output)
+    {
         System.out.println(iteration + ": " + output);
     }
 
@@ -80,7 +93,7 @@ public class GameOfLifeGrid {
      * Generate the output string from the live cells. Also set the new neighbour count as the current neighbour count
      * @return Output for single iteration.
      */
-    private List<String> generateOutPut() {
+    public List<String> generateOutPut() {
         List<String> output = new ArrayList<String>();
         for(int xCoordinate = 0; xCoordinate < width; xCoordinate++) {
             for (int yCoordinate = 0; yCoordinate < height; yCoordinate++) {
@@ -99,7 +112,7 @@ public class GameOfLifeGrid {
      * on the location. Every time a state changes in one cell all the neighbours will
      * be notified so they will update their alive neighbour count for the next iteration
      */
-    private void setUpNeighbourObservers () {
+    public void setUpNeighbourObservers () {
 
         for(int xCoordinate = 0; xCoordinate < width; xCoordinate++) {
             for ( int yCoordinate = 0; yCoordinate < height; yCoordinate++) {
@@ -147,7 +160,32 @@ public class GameOfLifeGrid {
      */
     public void run(int iterations) {
         for (int iteration = 1; iteration<= iterations; iteration++) {
-            generateNextState(iteration);
+            List<String> iterationOutput = generateNextState();
+            printStdOutput(iteration, iterationOutput);
         }
+    }
+
+    public int getWidth() {
+        return width;
+    }
+
+    public void setWidth(int width) {
+        this.width = width;
+    }
+
+    public int getHeight() {
+        return height;
+    }
+
+    public void setHeight(int height) {
+        this.height = height;
+    }
+
+    public Cell[][] getCellGird() {
+        return cellGird;
+    }
+
+    public void setCellGird(Cell[][] cellGird) {
+        this.cellGird = cellGird;
     }
 }

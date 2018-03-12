@@ -78,14 +78,14 @@ public class Cell extends Observable implements Observer{
     /**
      * Increment next live neighbour count. will be called when an observing dead cell turns alive
      */
-    private void incrementLiveNeighbours() {
+    public void incrementLiveNeighbours() {
         this.setNextLiveNeighbourCount(this.getNextLiveNeighbourCount() + 1);
     }
 
     /**
      * Decrement next live neighbour count. WIll be called when an observing live cell turns dead
      */
-    private void decrementLiveNeighbours() {
+    public void decrementLiveNeighbours() {
         int currentCount = this.getNextLiveNeighbourCount();
         if(currentCount > 0 ) {
             this.setNextLiveNeighbourCount(--currentCount);
