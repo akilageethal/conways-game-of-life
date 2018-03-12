@@ -17,9 +17,9 @@ Running the program
     Examples : []
                [2,4],[5,4],[7,5],[7,8]
 
-    *** Please note, the input reading functionality has not been implemented to handle any other input formats. It has
-    not been validated for the correct input format either, hence enter the above format exactly without spaces otherwise the
-    program may throw errors.***
+    *** Please note, the input reading functionality has not been implemented to handle
+    any other input formats. It has not been implemented to validate correct input format either,
+    hence enter the above format exactly without spaces otherwise the program may throw errors.***
 
 (4)Output will be printed on the console
 
