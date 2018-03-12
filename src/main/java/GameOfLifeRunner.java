@@ -1,5 +1,9 @@
 package main.java;
 
+import main.java.io.InputReader;
+
+import java.util.Scanner;
+
 /**
  * Runner class for the game of life application.
  * Creates the grid oobject with the given width and height
@@ -13,11 +17,24 @@ public class GameOfLifeRunner {
     private static final int ITERATIONS = 100;
 
     public static void main(String[] args) {
-        String input = "[5,5],[6,5],[7,5],[5,6],[6,6],[7,6]";
 
-        String[] inputArray = input.split("\\],\\[");
+        String inputString = null;
+        // Read the input.
+        Scanner scanner = new Scanner(System.in);
+        while (scanner.hasNext()) {
+            inputString = scanner.nextLine();
+            System.out.println(inputString);
+            if (inputString == null || inputString.isEmpty()) {
+                System.out.println("Invalid Input");
+                scanner.close();
+                return;
+            }
 
-        GameOfLifeGrid grid = new GameOfLifeGrid( inputArray, WIDTH,HEIGHT);
-        grid.run(ITERATIONS);
+            String[] inputArray = inputString.split("\\],\\[");
+
+            GameOfLifeGrid grid = new GameOfLifeGrid(inputArray, WIDTH, HEIGHT);
+            grid.run(ITERATIONS);
+        }
+        scanner.close();
     }
 }
